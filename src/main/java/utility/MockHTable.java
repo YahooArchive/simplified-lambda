@@ -26,6 +26,7 @@ import org.apache.hadoop.hbase.client.coprocessor.Batch;
 import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.ipc.CoprocessorRpcChannel;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
 
 import java.io.IOException;
 import java.util.*;
@@ -35,7 +36,8 @@ import java.util.logging.Logger;
  * utility.MockHTable.
  *
  * original utility.MockHTable (by agaoglu) : https://gist.github.com/agaoglu/613217#file_mock_h_table.java
- * upgraded by bjoshi 20150327
+ * upgraded by bhautikj 20150327
+ * upgraded by bhautikj 20150901
  *
  * Modifications
  *
@@ -520,6 +522,21 @@ public class MockHTable implements HTableInterface {
         return false;
     }
 
+   /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkAndMutate(byte[] row,
+                     byte[] family,
+                     byte[] qualifier,
+                     CompareOp compareOp,
+                     byte[] value,
+                     RowMutations mutation)
+                       throws IOException 
+    { 
+      throw new RuntimeException(this.getClass() + " does NOT implement this method.");
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -574,6 +591,8 @@ public class MockHTable implements HTableInterface {
         }
         return false;
     }
+
+
 
 
     /**
